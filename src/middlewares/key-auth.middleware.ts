@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response, NextFunction } from 'express';
-import { HTTPSTATUS } from 'enums/http-status.enum';
+import { HTTPSTATUS } from 'src/enums/http-status.enum';
 
 @Injectable()
 export class KeyAuthMiddleware implements NestMiddleware {
