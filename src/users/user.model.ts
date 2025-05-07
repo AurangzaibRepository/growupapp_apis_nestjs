@@ -45,4 +45,7 @@ export class User extends Model {
   @AllowNull(false)
   @Column
   role: USERROLES;
+
+  @Column
+  picture: string;
 }
