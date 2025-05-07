@@ -1,11 +1,12 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { Dialect } from 'sequelize';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
+import { AuthenticationMiddleware } from './middlewares/authentication.middleware';
 
 @Module({
   imports: [
@@ -28,4 +29,8 @@ import configuration from './config/configuration';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthenticationMiddleware).exclude('auth').forRoutes('*');
+  }
+}

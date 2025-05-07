@@ -10,4 +10,7 @@ export default () => ({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
   },
+  auth: {
+    api_key: process.env.API_KEY,
+  },
 });
