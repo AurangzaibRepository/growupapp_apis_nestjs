@@ -10,12 +10,4 @@ export class UsersService {
     private user: typeof User,
   ) {}
 
-  async getListing(pageNumber: number): Promise<User[]> {
-    const users = await this.user.findAll({
-      limit: 10,
-      offset: 0,
-    });
-
-    return users;
-  }
 }
