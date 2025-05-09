@@ -12,5 +12,6 @@ export default () => ({
   },
   auth: {
     api_key: process.env.API_KEY,
+    cors_origin: process.env.CORS_ORIGIN,
   },
 });
