@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { KeyAuthMiddleware } from './middlewares/key-auth.middleware';
 import { ValidationPipe } from '@nestjs/common';
@@ -11,15 +12,19 @@ async function bootstrap() {
   // Global prefix
   app.setGlobalPrefix('api');
 
-  // Global middlewares
-  app.use(KeyAuthMiddleware);
-
-  // Cors
+  // Cors (Cors and helmet should come before any app use call)
   app.enableCors({
     origin: configService.get<string>('auth.cors_origin'),
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
   });
+
+  app.use(helmet.frameguard({
+    action: 'sameorigin'
+  }));
+
+  // Global middlewares
+  app.use(KeyAuthMiddleware);
 
   // Apply global pipes
   app.useGlobalPipes(
