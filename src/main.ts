@@ -4,9 +4,11 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { KeyAuthMiddleware } from './middlewares/key-auth.middleware';
 import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);
 
   // Global prefix
@@ -34,6 +36,11 @@ async function bootstrap() {
       stopAtFirstError: true,
     }),
   );
+
+  // Configure static assets
+  app.useStaticAssets(join(__dirname, '..', 'public'), {
+    prefix: '/public/',	// URL prefix for static assets (optional)
+  });
 
   await app.listen(configService.get<number>('app.port', 8000)); // Can be (APP_PORT) from .env file
 }

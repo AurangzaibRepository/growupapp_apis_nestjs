@@ -36,6 +36,7 @@ export class User extends Model {
 
   @AllowNull(false)
   @Column(DataType.STRING(50))
+  @Unique
   contact_number: string;
 
   @AllowNull(false)
