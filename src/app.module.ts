@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { Dialect } from 'sequelize';
 import configuration from './config/configuration';
 import { AuthenticationMiddleware } from './middlewares/authentication.middleware';
+import { BeneficiariesModule } from './beneficiaries/beneficiaries.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthenticationMiddleware } from './middlewares/authentication.middlewar
       synchronize: true,
     }),
     UsersModule,
+    BeneficiariesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
